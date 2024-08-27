@@ -20,7 +20,11 @@ export async function dbConnect() {
 
     console.log("🖇Connected to MongoDB");
   } catch (error: ApiError | any) {
-    console.log("mongodb error", error.message);
-    process.exit(1);
+    if (error instanceof ApiError) {
+      throw new ApiError(error.statusCode, error.message);
+    } else {
+      console.error("mongodb error", error.message);
+      process.exit(1);
+    }
   }
 }
