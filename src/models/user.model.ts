@@ -18,7 +18,8 @@ const messageSchema: mongoose.Schema<Message> = new mongoose.Schema({
   },
 });
 
-export interface User extends mongoose.Document {
+export interface UserType extends mongoose.Document {
+  _id?: string;
   username: string;
   email: string;
   password: string;
@@ -29,11 +30,10 @@ export interface User extends mongoose.Document {
   messages: Message[];
 }
 
-const userSchema: mongoose.Schema<User> = new mongoose.Schema({
+const userSchema: mongoose.Schema<UserType> = new mongoose.Schema({
   username: {
     type: String,
     required: [true, "Username is required"],
-    unique: true,
     trim: true,
   },
   email: {
@@ -68,5 +68,5 @@ const userSchema: mongoose.Schema<User> = new mongoose.Schema({
 });
 
 export const User =
-  (mongoose.models.User as mongoose.Model<User>) ||
-  mongoose.model<User>("User", userSchema);
+  (mongoose.models.User as mongoose.Model<UserType>) ||
+  mongoose.model<UserType>("User", userSchema);

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { ApiError } from "../helpers/ApiError";
 
 type connectionObject = {
   isConnected?: number;
@@ -18,13 +17,9 @@ export async function dbConnect() {
 
     connection.isConnected = db.connections[0].readyState;
 
-    console.log("🖇Connected to MongoDB");
-  } catch (error: ApiError | any) {
-    if (error instanceof ApiError) {
-      throw new ApiError(error.statusCode, error.message);
-    } else {
-      console.error("mongodb error", error.message);
-      process.exit(1);
-    }
+    console.log("🔗 Connected to MongoDB");
+  } catch (error: any) {
+    console.error("mongodb error", error.message);
+    process.exit(1);
   }
 }
